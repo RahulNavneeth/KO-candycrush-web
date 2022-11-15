@@ -12,18 +12,27 @@ export const drop = () => {
 	// 	f_count += TOKEN[x].filter((i) => !i).length;
 	// }
 	setInterval(() => {
-		for (let i = 0; i < TOKEN.length; i++) {
+		for (let i = TOKEN.length - 1; i >= 0; i--) {
 			for (let j = 0; j < TOKEN[i].length; j++) {
-				console.log(TOKEN_LEN - i, j);
-				if (TOKEN_LEN - i < TOKEN_LEN) {
-					if (TOKEN[TOKEN_LEN - i][j] && !TOKEN[TOKEN_LEN - i + 1][j]) {
-						TOKEN[TOKEN_LEN - i][j] = false;
-						TOKEN[TOKEN_LEN - i + 1][j] = true;
-						TOKEN_GRID.set(TOKEN);
+				if (i < TOKEN_LEN) {
+					if (TOKEN[i][j] && !TOKEN[i + 1][j]) {
+						TOKEN[i][j] = false;
+						TOKEN[i + 1][j] = true;
+					} else if (TOKEN[i][j] && TOKEN[i + 1][j]) {
+						if (!TOKEN[i + 1][j - 1] && j !== 0) {
+							TOKEN[i][j] = false;
+							TOKEN[i + 1][j - 1] = true;
+						} else if (!TOKEN[i + 1][j + 1] && j !== 4) {
+							TOKEN[i][j] = false;
+							TOKEN[i + 1][j + 1] = true;
+							console.log(i, j);
+						}
 					}
 				}
+
+				TOKEN_GRID.set(TOKEN);
 			}
 		}
-	}, 100);
+	}, 500);
 	console.log(TOKEN);
 };
