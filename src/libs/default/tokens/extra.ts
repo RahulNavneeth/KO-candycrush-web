@@ -1,3 +1,4 @@
+import { GRID_SIZE, INTERVAL_TIME } from '../../config/constant';
 import { writable } from 'svelte/store';
 import { TOKEN_GRID } from './tokens';
 
@@ -8,12 +9,10 @@ TOKEN_GRID.subscribe((i) => {
 	TOKEN = i;
 });
 
-export const gen_extra_token = () => {
-	const EXTRA = TOKEN.filter((i) => !i.every((row) => row === true));
-	for (let row = 0; row < EXTRA.length; row++) {
-		for (let cell = 0; cell < EXTRA[row].length; cell++) {
-			EXTRA[row][cell] ? (EXTRA[row][cell] = false) : (EXTRA[row][cell] = true);
-		}
-	}
-	EXTRA_TOKEN.set(EXTRA);
+export const drop_extra_token = () => {
+	setInterval(() => {
+		TOKEN[0] = Array(GRID_SIZE).fill(true);
+	}, INTERVAL_TIME);
+
+	return true;
 };

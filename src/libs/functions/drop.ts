@@ -1,3 +1,4 @@
+import { INTERVAL_TIME } from '../config/constant';
 import { TOKEN_GRID } from '../default/tokens/tokens';
 
 let TOKEN: boolean[][];
@@ -6,11 +7,6 @@ TOKEN_GRID.subscribe((i) => {
 });
 export const drop = () => {
 	const TOKEN_LEN = TOKEN.length - 1;
-	// let f_count = 0;
-
-	// for (let x = 0; x < TOKEN.length; x++) {
-	// 	f_count += TOKEN[x].filter((i) => !i).length;
-	// }
 	setInterval(() => {
 		for (let i = TOKEN.length - 1; i >= 0; i--) {
 			for (let j = 0; j < TOKEN[i].length; j++) {
@@ -22,7 +18,7 @@ export const drop = () => {
 						if (!TOKEN[i + 1][j - 1] && j !== 0) {
 							TOKEN[i][j] = false;
 							TOKEN[i + 1][j - 1] = true;
-						} else if (!TOKEN[i + 1][j + 1] && j !== 4) {
+						} else if (!TOKEN[i + 1][j + 1] && j !== TOKEN[0].length - 1) {
 							TOKEN[i][j] = false;
 							TOKEN[i + 1][j + 1] = true;
 							console.log(i, j);
@@ -33,6 +29,6 @@ export const drop = () => {
 				TOKEN_GRID.set(TOKEN);
 			}
 		}
-	}, 500);
+	}, INTERVAL_TIME);
 	console.log(TOKEN);
 };
